@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  heroku: circleci/heroku@2.0.0
 
 jobs:
   test:
@@ -40,7 +42,7 @@ jobs:
 
 workflows:
   version: 2.1
-  deploy:
+  heroku_deploy:
     jobs:
       - test
       - lint
@@ -48,4 +50,7 @@ workflows:
           requires:
             - test
             - lint
+      - heroku/deploy-via-git:
+          requires:
+            - push_to_docker_hub
 
