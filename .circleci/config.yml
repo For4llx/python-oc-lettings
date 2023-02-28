@@ -39,6 +39,17 @@ jobs:
       - run:
           name: push docker image
           command: docker push nobimeromeo/python-oc-lettings:$CIRCLE_BRANCH
+  deploy_to_heroku:
+      machine: true
+      steps:
+        - checkout
+        - run:
+            name: Build and push Docker image to Heroku
+            command: |
+              sudo curl https://cli-assets.heroku.com/install.sh | sh
+              HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+              HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a python-django-starter web
+              HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a python-django-starter web
 
 workflows:
   version: 2.1
@@ -50,7 +61,7 @@ workflows:
           requires:
             - test
             - lint
-      - heroku/deploy-via-git:
+      - deploy_to_heroku:
           requires:
             - push_to_docker_hub
 
