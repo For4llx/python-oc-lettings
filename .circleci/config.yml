@@ -55,6 +55,4 @@ workflows:
   version: 2.1
   heroku_deploy:
     jobs:
-      - deploy_to_heroku:
-          requires:
-            - push_to_docker_hub
+      - deploy_to_heroku
