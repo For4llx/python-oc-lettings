@@ -4,8 +4,7 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 sentry_sdk.init(
-    dsn="https://2d979fcb7928429c939b3d55895c500e@o4504734325538816"
-    ".ingest.sentry.io/4504763608465408",
+    dsn="https://2d979fcb7928429c939b3d55895c500e@o4504734325538816.ingest.sentry.io/4504763608465408",  # noqa: E501
     integrations=[
         DjangoIntegration(),
     ],
