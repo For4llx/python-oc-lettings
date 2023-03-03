@@ -35,10 +35,10 @@ jobs:
           command: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
       - run:
           name: build docker image
-          command: docker build -t nobimeromeo/python-oc-lettings:$CIRCLE_BRANCH .
+          command: docker build -t nobimeromeo/python-oc-lettings:$CIRCLE_SHA1 .
       - run:
           name: push docker image
-          command: docker push nobimeromeo/python-oc-lettings:$CIRCLE_BRANCH
+          command: docker push nobimeromeo/python-oc-lettings:$CIRCLE_SHA1
   deploy_to_heroku:
       machine: true
       steps:
@@ -64,3 +64,7 @@ workflows:
       - deploy_to_heroku:
           requires:
             - push_to_docker_hub
+          filters:
+            branches:
+              only:
+                - main
